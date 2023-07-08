@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { useRef } from 'react'
+import emailjs from '@emailjs/browser'
+import { Field, Form, Formik } from 'formik';
 import {
     Grid,
     Box,
@@ -10,13 +12,22 @@ import {
     Input,
     Button,
     Checkbox,
-    CheckboxGroup,
     Center,
     Flex,
     Select,
 } from '@chakra-ui/react';
+import PhoneNumberInput from './PhoneNumberInput';
 
-const Form = () => {
+const reactForm = () => {
+
+    const validateName = (value) => {
+        let error;
+        if (!value) {
+            error = 'Lütfen adınızı giriniz';
+        }
+        return error;
+    }
+
     return (
         <Center h="100vh">
             <Grid
@@ -45,18 +56,11 @@ const Form = () => {
                 </Grid>
                 <FormControl gridColumn="1 / span 2">
                     <FormLabel>E-Posta</FormLabel>
-                    <Input type="email" placeHolder="Örnek: adınız@örnek.com" />
+                    <Input type="email" placeholder="Örnek: adınız@örnek.com" />
                     <FormHelperText>E-Posta bilgileriniz başkalarıyla paylaşılmaz.</FormHelperText>
                 </FormControl>
                 <Grid gridTemplateColumns="1fr 2fr" gridColumn="1 / span 2" gap={2}>
-                    <FormControl>
-                        <FormLabel>Gsm</FormLabel>
-                        <Input type="text" placeholder="Alan kodu" />
-                    </FormControl>
-                    <FormControl>
-                        <FormLabel>.</FormLabel>
-                        <Input type="number" placeholder="Telefon" />
-                    </FormControl>
+                    <PhoneNumberInput />
                 </Grid>
                 <FormControl gridColumn="1 / span 2">
                     <FormLabel>Lütfen ilgilendiğiniz bir proje seçin</FormLabel>
@@ -75,7 +79,12 @@ const Form = () => {
                         <Checkbox value="Telefon">Telefon</Checkbox>
                     </Flex>
                 </FormControl>
-                <Button gridColumn="1 / span 2" colorScheme="green">
+
+                <Button
+                    gridColumn="1 / span 2"
+                    colorScheme='teal'
+                    type='submit'
+                >
                     Gönder
                 </Button>
             </Grid>
@@ -83,4 +92,5 @@ const Form = () => {
     )
 }
 
-export default Form
+
+export default reactForm
