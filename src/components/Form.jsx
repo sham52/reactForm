@@ -21,6 +21,7 @@ import {
 import 'react-phone-number-input/style.css';
 import PhoneNumberInput from "./PhoneNumberInput";
 import { COUNTRIES } from "./countries";
+import TextField from './Textfield';
 
 
 const reactForm = () => {
@@ -53,210 +54,184 @@ const reactForm = () => {
         }));
     }
 
-    const formik = useFormik({
-        initialValues: {
-            name: "",
-            surname: "",
-            email: "",
-            gsm: "",
-            project: "",
-            messagingUtil: {
-                Email: false,
-                Phone: false,
-                Sms: false,
-            },
-        },
-
-        validationSchema: Yup.object({
-            name: Yup.string()
-                .matches(/^[A-Za-zşŞöÖüÜğĞİı ]*$/, 'Lütfen geçerli bir ad girin')
-                .max(40)
-                .required("Lütfen adınızı girin"),
-            surname: Yup.string()
-                .matches(/^[A-Za-zşŞöÖüÜğĞİı ]*$/, 'Lütfen geçerli bir soyad girin')
-                .max(40)
-                .required("Lütfen soyadınızı girin"),
-            email: Yup.string()
-                .email("Lütfen geçerli bir e-posta adresi girin")
-                .required("Lütfen bir e-posta adresi girin"),
-            gsm: Yup.number()
-                .required('Lütfen bir telefon numarası girin'),
-            countryCode: Yup.number()
-                .required('Lütfen bir alan kodu çekiniz girin'),
-            project: Yup.string()
-                .required('Lütfen bir proje seçin'),
-            messagingUtil: Yup.object()
-        }),
-
-        onSubmit: (values, actions) => {
-            alert(JSON.stringify(values, null, 2));
-            sendEmail(
-                {
-                    name: values.name,
-                    surname: values.surname,
-                    email: values.email,
-                    gsm: values.gsm,
-                    countryCode: values.countryCode,
-                    project: values.project,
-                    messagingUtil: values.messagingUtil
-                }
-            );
-            actions.resetForm();
-        },
-    }
-    )
-
-
     return (
-        <Center h="100vh">
-            <form ref={form} onSubmit={formik.handleSubmit}>
-                <Grid
-                    templateColumns="repeat(2, 1fr)"
-                    gap={5}
-                    width="400px"
-                    padding={6}
-                    boxShadow="md"
-                    borderRadius="md"
-                >
-                    <Box gridColumn="1 / span 2" paddingBottom={5}>
-                        <Heading paddingBottom={4} size="xl" textAlign="center">
-                            Bilgi Talep Formu
-                        </Heading>
-                        <Text textAlign="center" fontWeight="normal">Projelerimiz ile ilgili detaylı bilgi almak için lütfen aşağıdaki formu doldurun. Biz size ulaşalım.</Text>
-                    </Box>
-
-                    {/* Başlıkları Düzenle */}
-                    {/* AD-SOYAD */}
-                    <Grid gridTemplateColumns="1fr 1fr" gridColumn="1 / span 2" gap={2}>
-                        <FormControl isInvalid={formik.errors.name && formik.touched.name}>
-                            <FormLabel>Ad</FormLabel>
-                            <Input
-                                name="name"
-                                type="text"
-                                placeholder="Adınız"
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                                value={formik.values.name}
-                            />
-                            <FormErrorMessage>{formik.errors.name}</FormErrorMessage>
-                        </FormControl>
-
-                        <FormControl isInvalid={formik.errors.surname && formik.touched.surname}>
-                            <FormLabel>Soyad</FormLabel>
-                            <Input
-                                name="surname"
-                                type="text"
-                                placeholder="Soyadınız"
-                                onChange={formik.handleChange}
-                                value={formik.values.surname}
-                                onBlur={formik.handleBlur}
-
-                            />
-                            <FormErrorMessage>{formik.errors.surname}</FormErrorMessage>
-                        </FormControl>
-                    </Grid>
-
-                    {/* E-POSTA */}
-                    <FormControl
-                        isInvalid={formik.errors.email && formik.touched.email}
-                        gridColumn="1 / span 2">
-                        <FormLabel>E-Posta</FormLabel>
-                        <Input
-                            name="email"
-                            type="email"
-                            placeholder="Örnek: adınız@örnek.com"
-                            onChange={formik.handleChange}
-                            values={formik.values.email}
-                            onBlur={formik.handleBlur}
-
-                        />
-                        <FormErrorMessage>{formik.errors.email}</FormErrorMessage>
-                        <FormHelperText>E-Posta bilgileriniz başkalarıyla paylaşılmaz.</FormHelperText>
-                    </FormControl>
-
-                    {/* GSM  */}
-                    <Grid gridTemplateColumns="1fr 2fr" gridColumn="1 / span 2" gap={2}>
-
-                        <FormControl
-                            gridColumn="1 / span 2"
-                            isInvalid={formik.errors.gsm && formik.touched.gsm}
+        <Formik
+            initialValues={{
+                name: "",
+                surname: "",
+                email: "",
+                gsm: "",
+                project: "",
+                messagingUtil: {
+                    Email: false,
+                    Phone: false,
+                    Sms: false,
+                }
+            }}
+            validationSchema={Yup.object({
+                name: Yup.string()
+                    .matches(/^[A-Za-zşŞöÖüÜğĞİı ]*$/, 'Lütfen geçerli bir ad girin')
+                    .max(40)
+                    .required("Lütfen adınızı girin"),
+                surname: Yup.string()
+                    .matches(/^[A-Za-zşŞöÖüÜğĞİı ]*$/, 'Lütfen geçerli bir soyad girin')
+                    .max(40)
+                    .required("Lütfen soyadınızı girin"),
+                email: Yup.string()
+                    .email("Lütfen geçerli bir e-posta adresi girin")
+                    .required("Lütfen bir e-posta adresi girin"),
+                gsm: Yup.number()
+                    .required('Lütfen bir telefon numarası girin'),
+                countryCode: Yup.number()
+                    .required('Lütfen bir alan kodu çekiniz girin'),
+                project: Yup.string()
+                    .required('Lütfen bir proje seçin'),
+                messagingUtil: Yup.object()
+            })}
+            onSubmit={(values, actions) => {
+                alert(JSON.stringify(values, null, 2));
+                sendEmail(
+                    {
+                        name: values.name,
+                        surname: values.surname,
+                        email: values.email,
+                        gsm: values.gsm,
+                        countryCode: values.countryCode,
+                        project: values.project,
+                        messagingUtil: values.messagingUtil
+                    }
+                );
+                actions.resetForm();
+            }}
+        >
+            {(formik) => (
+                <Center h="100vh">
+                    <form ref={form} onSubmit={formik.handleSubmit}>
+                        <Grid
+                            templateColumns="repeat(2, 1fr)"
+                            gap={5}
+                            width="400px"
+                            padding={6}
+                            boxShadow="md"
+                            borderRadius="md"
                         >
-                            <FormLabel>Gsm</FormLabel>
-                            <PhoneNumberInput
-                                value={formik.values.gsm}
-                                options={countryOptions}
-                                onBlur={formik.handleBlur}
-                                onChange={formik.handleChange}
-                                placeholder="Enter phone number"
-                            />
-                            {console.log(formik.values.gsm)}
-                        </FormControl >
-                        <FormErrorMessage>{formik.errors.gsm}</FormErrorMessage>
+                            <Box gridColumn="1 / span 2" paddingBottom={5}>
+                                <Heading paddingBottom={4} size="xl" textAlign="center">
+                                    Bilgi Talep Formu
+                                </Heading>
+                                <Text textAlign="center" fontWeight="normal">Projelerimiz ile ilgili detaylı bilgi almak için lütfen aşağıdaki formu doldurun. Biz size ulaşalım.</Text>
+                            </Box>
 
-                    </Grid>
+                            {/* Başlıkları Düzenle */}
+                            {/* AD-SOYAD */}
+                            <Grid gridTemplateColumns="1fr 1fr" gridColumn="1 / span 2" gap={2}>
+                                <TextField label="Ad" name="name" placeholder="Adınız" />
+                                <TextField label="Soyad" name="surname" placeholder="Soyadınız" />
+                            </Grid>
 
-                    {/* PROJE */}
-                    <FormControl
-                        isInvalid={formik.errors.project && formik.touched.project}
-                        gridColumn="1 / span 2">
-                        <FormLabel>Lütfen ilgilendiğiniz bir proje seçin</FormLabel>
-                        <Select
-                            name="project"
-                            onChange={formik.handleChange}
-                            value={formik.values.project}
-                            onBlur={formik.handleBlur}
-                            placeholder='Lütfen Seçin'>
-                            <option value='proje-1'>proje-1</option>
-                            <option value='proje-2'>proje-2</option>
-                            <option value='proje-3'>proje-3</option>
-                            <option value='proje-4'>proje-4</option>
-                        </Select>
-                        {console.log(formik.values.messagingUtil)}
-                        <FormErrorMessage>{formik.errors.project}</FormErrorMessage>
-                    </FormControl>
+                            {/* E-POSTA */}
+                            <FormControl
+                                isInvalid={formik.errors.email && formik.touched.email}
+                                gridColumn="1 / span 2">
+                                <FormLabel>E-Posta</FormLabel>
+                                <Field
+                                    as={Input}
+                                    name="email"
+                                    type="email"
+                                    placeholder="Örnek: adınız@örnek.com"
+                                    onChange={formik.handleChange}
+                                    values={formik.values.email}
+                                    onBlur={formik.handleBlur}
 
-                    {/* İLETİŞİM YÖNTEMİ */}
-                    <FormControl
-                        gridColumn="1 / span 2"
-                        isInvalid={formik.errors.messagingUtil && formik.touched.messagingUtil}
-                    >
-                        <FormLabel>İletişim Seçenekleri</FormLabel>
-                        <Flex justifyContent="space-between">
-                            <Checkbox
-                                name="Sms"
-                                value={formik.values.messagingUtil.Sms}
-                                onChange={handleCheckboxChange}
-                                onBlur={formik.handleBlur}
-                            >Sms</Checkbox>
+                                />
+                                <FormErrorMessage>{formik.errors.email}</FormErrorMessage>
+                                <FormHelperText>E-Posta bilgileriniz başkalarıyla paylaşılmaz.</FormHelperText>
+                            </FormControl>
 
-                            <Checkbox
-                                name='Email'
-                                value={formik.values.messagingUtil.Email}
-                                onChange={handleCheckboxChange}
-                                onBlur={formik.handleBlur}
-                            >E-Posta</Checkbox>
-                            <Checkbox
-                                name='Phone'
-                                onChange={handleCheckboxChange}
-                                onBlur={formik.handleBlur}
-                                value={formik.values.messagingUtil.Phone}>Telefon</Checkbox>
-                        </Flex>
-                        <FormErrorMessage>{formik.errors.messagingUtil}</FormErrorMessage>
+                            {/* GSM  */}
+                            <Grid gridTemplateColumns="1fr 2fr" gridColumn="1 / span 2" gap={2}>
+                                <FormControl
+                                    gridColumn="1 / span 2"
+                                    isInvalid={formik.errors.gsm && formik.touched.gsm}
+                                >
+                                    <FormLabel>Gsm</FormLabel>
+                                    <PhoneNumberInput
+                                        value={formik.values.gsm}
+                                        options={countryOptions}
+                                        onBlur={formik.handleBlur}
+                                        onChange={formik.handleChange}
+                                        placeholder="Enter phone number"
+                                    />
+                                    {console.log(formik.values.gsm)}
+                                </FormControl >
+                                <FormErrorMessage>{formik.errors.gsm}</FormErrorMessage>
+                            </Grid>
 
-                    </FormControl>
+                            {/* PROJE */}
+                            <FormControl
+                                isInvalid={formik.errors.project && formik.touched.project}
+                                gridColumn="1 / span 2">
+                                <FormLabel>Lütfen ilgilendiğiniz bir proje seçin</FormLabel>
+                                <Field
+                                    as={Select}
+                                    name="project"
+                                    onChange={formik.handleChange}
+                                    value={formik.values.project}
+                                    onBlur={formik.handleBlur}
+                                    placeholder='Lütfen Seçin'>
+                                    <option value='proje-1'>proje-1</option>
+                                    <option value='proje-2'>proje-2</option>
+                                    <option value='proje-3'>proje-3</option>
+                                    <option value='proje-4'>proje-4</option>
+                                </Field>
+                                {console.log(formik.values.messagingUtil)}
+                                <FormErrorMessage>{formik.errors.project}</FormErrorMessage>
+                            </FormControl>
 
-                    {/* GÖNDER */}
-                    <Button
-                        gridColumn="1 / span 2"
-                        colorScheme='teal'
-                        type='submit'
-                    >
-                        Gönder
-                    </Button>
-                </Grid>
-            </form>
+                            {/* İLETİŞİM YÖNTEMİ */}
+                            <FormControl
+                                gridColumn="1 / span 2"
+                                isInvalid={formik.errors.messagingUtil && formik.touched.messagingUtil}
+                            >
+                                <FormLabel>İletişim Seçenekleri</FormLabel>
+                                <Flex justifyContent="space-between">
+                                    <Field
+                                        as={Checkbox}
+                                        name="Sms"
+                                        value={formik.values.messagingUtil.Sms}
+                                        onChange={handleCheckboxChange}
+                                        onBlur={formik.handleBlur}
+                                    >Sms</Field>
+                                    <Field
+                                        as={Checkbox}
+                                        name='Email'
+                                        value={formik.values.messagingUtil.Email}
+                                        onChange={handleCheckboxChange}
+                                        onBlur={formik.handleBlur}
+                                    >E-Posta</Field>
+                                    <Field
+                                        as={Checkbox}
+                                        name='Phone'
+                                        onChange={handleCheckboxChange}
+                                        onBlur={formik.handleBlur}
+                                        value={formik.values.messagingUtil.Phone}>Telefon</Field>
+                                </Flex>
+                                <FormErrorMessage>{formik.errors.messagingUtil}</FormErrorMessage>
+                            </FormControl>
+                            {/* GÖNDER */}
+                            <Button
+                                gridColumn="1 / span 2"
+                                colorScheme='teal'
+                                type='submit'
+                            >
+                                Gönder
+                            </Button>
+                        </Grid>
+                    </form>
+                </Center >
+            )}
+        </Formik >
 
-        </Center >
     )
 }
 
