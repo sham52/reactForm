@@ -19,7 +19,8 @@ import {
     FormErrorMessage,
 } from '@chakra-ui/react';
 import 'react-phone-number-input/style.css';
-import PhoneInput from 'react-phone-number-input';
+import PhoneNumberInput from "./PhoneNumberInput";
+import { COUNTRIES } from "./countries";
 
 
 const reactForm = () => {
@@ -35,6 +36,11 @@ const reactForm = () => {
                 console.log(error.text);
             });
     };
+
+    const countryOptions = COUNTRIES.map(({ name, iso }) => ({
+        label: name,
+        value: iso
+    }));
 
     const handleCheckboxChange = (e) => {
         const { name, checked } = e.target;
@@ -73,8 +79,10 @@ const reactForm = () => {
             email: Yup.string()
                 .email("Lütfen geçerli bir e-posta adresi girin")
                 .required("Lütfen bir e-posta adresi girin"),
-            gsm: Yup.string()
+            gsm: Yup.number()
                 .required('Lütfen bir telefon numarası girin'),
+            countryCode: Yup.number()
+                .required('Lütfen bir alan kodu çekiniz girin'),
             project: Yup.string()
                 .required('Lütfen bir proje seçin'),
             messagingUtil: Yup.object()
@@ -88,6 +96,7 @@ const reactForm = () => {
                     surname: values.surname,
                     email: values.email,
                     gsm: values.gsm,
+                    countryCode: values.countryCode,
                     project: values.project,
                     messagingUtil: values.messagingUtil
                 }
@@ -167,37 +176,23 @@ const reactForm = () => {
 
                     {/* GSM  */}
                     <Grid gridTemplateColumns="1fr 2fr" gridColumn="1 / span 2" gap={2}>
+
                         <FormControl
                             gridColumn="1 / span 2"
                             isInvalid={formik.errors.gsm && formik.touched.gsm}
                         >
                             <FormLabel>Gsm</FormLabel>
-                            {console.log(formik.values)}
-                            <PhoneInput
-                                name="gsm"
-                                placeholder="Telefon"
-                                defaultCountry="TR"
-                                onBlur={formik.handleBlur}
+                            <PhoneNumberInput
                                 value={formik.values.gsm}
+                                options={countryOptions}
+                                onBlur={formik.handleBlur}
                                 onChange={formik.handleChange}
-                                style={{
-                                    width: '100%',
-                                    padding: '0.375rem 0.75rem',
-                                    fontSize: '1rem',
-                                    lineHeight: '1.7',
-                                    color: 'black',
-                                    backgroundColor: 'white',
-                                    border: '1px solid #CBD5E0',
-                                    borderRadius: '0.25rem',
-                                }}
-                                containerstyle={{
-                                    width: '100%',
-                                    border: '1px solid #CBD5E0',
-                                    borderRadius: '0.25rem',
-                                }}
+                                placeholder="Enter phone number"
                             />
-                            <FormErrorMessage>{formik.errors.gsm}</FormErrorMessage>
-                        </FormControl>
+                            {console.log(formik.values.gsm)}
+                        </FormControl >
+                        <FormErrorMessage>{formik.errors.gsm}</FormErrorMessage>
+
                     </Grid>
 
                     {/* PROJE */}
