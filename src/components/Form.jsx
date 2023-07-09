@@ -109,11 +109,11 @@ const reactForm = () => {
                     boxShadow="md"
                     borderRadius="md"
                 >
-                    <Box gridColumn="1 / span 2">
-                        <Heading size="xl" textAlign="center">
+                    <Box gridColumn="1 / span 2" paddingBottom={5}>
+                        <Heading paddingBottom={4} size="xl" textAlign="center">
                             Bilgi Talep Formu
                         </Heading>
-                        <Text textAlign="center" fontWeight="thin">Projelerimiz ile ilgili detaylı bilgi almak için lütfen aşağıdaki formu doldurun. Biz size ulaşalım.</Text>
+                        <Text textAlign="center" fontWeight="normal">Projelerimiz ile ilgili detaylı bilgi almak için lütfen aşağıdaki formu doldurun. Biz size ulaşalım.</Text>
                     </Box>
 
                     {/* Başlıkları Düzenle */}
