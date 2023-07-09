@@ -63,11 +63,11 @@ const reactForm = () => {
 
         validationSchema: Yup.object({
             name: Yup.string()
-                .matches(/^[A-Za-z ]*$/, 'Lütfen geçerli bir ad girin')
+                .matches(/^[A-Za-zşŞöÖüÜğĞİı ]*$/, 'Lütfen geçerli bir ad girin')
                 .max(40)
                 .required("Lütfen adınızı girin"),
             surname: Yup.string()
-                .matches(/^[A-Za-z ]*$/, 'Lütfen geçerli bir soyad girin')
+                .matches(/^[A-Za-zşŞöÖüÜğĞİı ]*$/, 'Lütfen geçerli bir soyad girin')
                 .max(40)
                 .required("Lütfen soyadınızı girin"),
             email: Yup.string()
