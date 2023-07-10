@@ -7,7 +7,7 @@ import {
     InputGroup,
     InputLeftElement
 } from "@chakra-ui/react";
-import { PhoneIcon, ChevronDownIcon } from "@chakra-ui/icons";
+import { PhoneIcon, } from "@chakra-ui/icons";
 import Flag from "react-world-flags";
 import { AsYouType } from "libphonenumber-js";
 import { getCountryTelCode } from "./countries";
@@ -79,8 +79,10 @@ export default function PhoneNumberInput({
                             <Flag height="1rem" code={selectedCountry || ""} />
                         </Box>
                     ) : (
-                        <PhoneIcon name="phone" />
+                    <PhoneIcon name="chevron-down" />
                     )}
+
+
                 </Flex>
             </InputLeftElement>
             <Input
