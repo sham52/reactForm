@@ -45,6 +45,8 @@ const reactForm = () => {
 
 
 
+
+
     return (
         <Formik
             initialValues={{
@@ -57,7 +59,8 @@ const reactForm = () => {
                     Email: false,
                     Phone: false,
                     Sms: false,
-                }
+                },
+                areaCode: "",
             }}
             validationSchema={Yup.object({
                 name: Yup.string()
@@ -167,7 +170,7 @@ const reactForm = () => {
                                             onChange={formik.handleChange}
                                             placeholder="Enter phone number"
                                         />
-                                        {console.log(formik.values.gsm)}
+                                        {console.log()}
                                     </FormControl >
                                     <FormErrorMessage>{formik.errors.gsm}</FormErrorMessage>
                                 </Grid>

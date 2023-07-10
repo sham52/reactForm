@@ -43,13 +43,13 @@ export default function PhoneNumberInput({
         onChange(parsedNumber);
     };
 
-    const onPhoneNumberChange = e => {
-        let value = e.target.value;
-        let parsedNumber = new AsYouType().input(`${countryCode}${value}`);
+     const onPhoneNumberChange = e => {
+         let value = e.target.value;
+         let parsedNumber = new AsYouType().input(`${countryCode}${value}`);
 
-        setNumber(value);
-        onChange(parsedNumber);
-    };
+         setNumber(value);
+         onChange(parsedNumber);
+     };
 
     return (
         <InputGroup size={size} {...rest}>
