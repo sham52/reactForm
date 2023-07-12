@@ -282,7 +282,7 @@ const reactForm = () => {
             <FormLabel>İletişim Seçenekleri</FormLabel>
             <Flex justifyContent="space-between">
               <Checkbox
-                name="Sms"
+                name="messageUtil"
                 value={formik.values.messagingUtil.Sms}
                 onChange={handleCheckboxChange}
                 onBlur={formik.handleBlur}
@@ -290,7 +290,7 @@ const reactForm = () => {
                 Sms
               </Checkbox>
               <Checkbox
-                name="Email"
+                name="messageUtil"
                 value={formik.values.messagingUtil.Email}
                 onChange={handleCheckboxChange}
                 onBlur={formik.handleBlur}
@@ -298,7 +298,7 @@ const reactForm = () => {
                 E-Posta
               </Checkbox>
               <Checkbox
-                name="Phone"
+                name="messageUtil"
                 onChange={handleCheckboxChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.messagingUtil.Phone}
