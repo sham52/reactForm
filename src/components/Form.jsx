@@ -20,27 +20,13 @@ import {
   InputLeftAddon,
   Select,
   FormErrorMessage,
+  CheckboxGroup,
 } from "@chakra-ui/react";
 import "react-phone-number-input/style.css";
 
 const reactForm = () => {
   const [isLoading, setIsLoading] = useState(false);
 
-  const resetForm = () => {
-    formik.setValues({
-      name: "",
-      surname: "",
-      email: "",
-      areaCode: "",
-      gsm: "",
-      project: "",
-      messagingUtil: {
-        Email: false,
-        Phone: false,
-        Sms: false,
-      },
-    });
-  };
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -110,7 +96,8 @@ const reactForm = () => {
       };
       console.log(data);
       sendEmail(data);
-     actions.resetForm();
+      
+      actions.resetForm();
     },
   });
 
@@ -155,6 +142,7 @@ const reactForm = () => {
           boxShadow="md"
           borderRadius="md"
         >
+
           <Box gridColumn="1 / span 2" paddingBottom={5}>
             <Heading paddingBottom={4} size="xl" textAlign="center">
               Bilgi Talep Formu
@@ -281,6 +269,8 @@ const reactForm = () => {
           >
             <FormLabel>İletişim Seçenekleri</FormLabel>
             <Flex justifyContent="space-between">
+              <CheckboxGroup>
+
               <Checkbox
                 name="messageUtil"
                 value={formik.values.messagingUtil.Sms}
@@ -305,6 +295,8 @@ const reactForm = () => {
               >
                 Telefon
               </Checkbox>
+              </CheckboxGroup>
+
             </Flex>
             <FormErrorMessage>{formik.errors.messagingUtil}</FormErrorMessage>
           </FormControl>
